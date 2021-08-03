@@ -17,6 +17,8 @@
 #include <stdbool.h>
 #include <util/delay.h>
 #include "UART_1_AVR128DA64.h"
+#include "MPRSS_sensor.h"
+#include "Motorcontrol.h"
 #define PI 3.14
 #define AMPLITUDE 5   //Amplitude value
 #define AMP ((AMPLITUDE*255)/5)
@@ -25,6 +27,7 @@ float output = 0.0;
 unsigned long milliseconds = 0,millis;
 float amp_value=0;
 void sineWave(void);
+
 
 void set_millis(void)
 {
@@ -49,11 +52,17 @@ int main(void)
 {
 	 set_millis();
 	 USART1_init(9600);
-	 
+	 Pressure_init();
+	 TCA0_PWM_init();
+	  // 	 _delay_ms(1000);
+// 	 USART1_sendString("Hello");
 	
     while(1)
     { 
-       sineWave(); 
+      // sineWave(); 
+	  Pressure_read();
+	  // USART1_sendFloat(pressure,1);
+	   
     }
 }
 void sineWave(void)
