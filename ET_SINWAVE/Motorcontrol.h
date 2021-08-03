@@ -15,12 +15,12 @@
 #include <util/delay.h>
 
 
-int  dutyCycle1  = 1024;			// MAX Value	1024 FOR 12V
+int  dutyCycle1  = 0;			// MAX Value	1024 FOR 12V
 
 
 void TCA0_PWM_init(void);
 void PWM_Condition1(void);
-
+void SET_DUTYCYCLE(int dutycycle);
 
 
 
@@ -37,8 +37,9 @@ void TCA0_PWM_init(void)
 	PORTA.PIN0CTRL |= (1 << 3);
 	//PORTA.OUTSET |= (1 << 0);
 	TCA0.SINGLE.PER = 3990;     // calculation for 1ms
-	TCA0.SINGLE.CMP0 = dutyCycle1;
+	
 	TCA0.SINGLE.CNT = 0;
+    TCA0.SINGLE.CMP0 = 0;
 
 	TCA0.SINGLE.CTRLA |= (0x0 << 1); //Ftca = fclk_per
 	TCA0.SINGLE.CTRLB |= (1 << 4); // compare 0 enable
@@ -67,11 +68,13 @@ void PWM_Condition1(void)
 	}
 }
 
+void SET_DUTYCYCLE(int dutycycle)        
+{
+	dutyCycle1=dutycycle;
+    TCA0.SINGLE.CMP0 = dutyCycle1;
 
 
-
-
-
+}
 
 
 #endif /* MOTORCONTROL_H_ */

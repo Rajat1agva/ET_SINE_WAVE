@@ -53,14 +53,15 @@ int main(void)
 	 set_millis();
 	 USART1_init(9600);
 	 Pressure_init();
-	 TCA0_PWM_init();
+	 TCA0_PWM_init();    //Initialize PA0 pin as PWM pin for motor
 	  // 	 _delay_ms(1000);
 // 	 USART1_sendString("Hello");
-	
+	SET_DUTYCYCLE(1024);
     while(1)
     { 
       // sineWave(); 
 	  Pressure_read();
+	  
 	  // USART1_sendFloat(pressure,1);
 	   
     }
